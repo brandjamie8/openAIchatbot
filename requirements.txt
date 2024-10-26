@@ -1,0 +1,10 @@
+streamlit
+pandas
+numpy
+random
+datetime
+plotly
+sqlite3
+os
+re
+openai
