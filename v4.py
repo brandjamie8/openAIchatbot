@@ -210,7 +210,7 @@ def main():
                     date_pattern = re.compile(r'\b(\d{4}-\d{2}-\d{2}|\b(january|february|march|april|may|june|july|august|september|october|november|december)\s\d{4}|\b\d{4}\b)', re.IGNORECASE)
                     if not date_pattern.search(user_query):
                         st.warning("It looks like you haven't specified a date period in your request!")
-                    elif openai_api_key and user_query:
+                    if openai_api_key and user_query:
                         os.environ["OPENAI_API_KEY"] = openai_api_key
                         client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
                         
