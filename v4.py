@@ -144,7 +144,7 @@ def main():
             st.write("")
             selected_table = st.selectbox("Select a table to see more detail", list(st.session_state.data_frames.keys()))
             if selected_table:    
-                st.header(f"{selected_table} Table)
+                st.header(f"{selected_table} Table")
                 st.subheader("Data and Schema")
                 st.write("Columns generated are:")
                 for column, definition in table_definitions[selected_table].items():
