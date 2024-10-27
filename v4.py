@@ -91,7 +91,7 @@ def main():
         st.error("Incorrect password. Please try again.")
     else:
         openai_api_key = st.secrets["OPENAI_API_KEY"]
-        num_rows = st.number_input("Select number of rows to generate", min_value=0, max_value=100000, value=0)
+        num_rows = st.number_input("Select number of rows to generate", min_value=0, max_value=100000, value=1000)
 
         if 'data_frames' not in st.session_state or len(st.session_state.data_frames['Patients']) != num_rows:
             preload_nhs_tables(num_rows)
