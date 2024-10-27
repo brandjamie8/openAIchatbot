@@ -1,7 +1,5 @@
 streamlit
 pandas
 numpy
-datetime
 plotly
-sqlite3
 openai
