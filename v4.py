@@ -210,7 +210,7 @@ def main():
                     date_pattern = re.compile(r'\b(\d{4}-\d{2}-\d{2}|\b(january|february|march|april|may|june|july|august|september|october|november|december)\s\d{4}|\b\d{4}\b)', re.IGNORECASE)
                     if not date_pattern.search(user_query):
                         st.warning("It looks like you haven't specified a date period in your request!")
-                    if openai_api_key and user_query:
+                    elif openai_api_key and user_query:
                         os.environ["OPENAI_API_KEY"] = openai_api_key
                         client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
                         
@@ -229,33 +229,34 @@ def main():
             Translate the following natural language request into an SQL query, using standard SQLite syntax and avoiding non-standard functions.
             :
             {user_query}
-            """                
-                        try:
-                            chat_completion = client.chat.completions.create(
-                                messages=[
-                                    {"role": "user", "content": prompt}
-                                ],
-                                model="gpt-4o-mini"
-                            )
-                            sql_query = chat_completion.choices[0].message.content.split('```sql')[-1].split('```')[0].strip()
-                            st.session_state.query_result = sql_query
-                            st.text_area("Generated SQL Query", value=st.session_state.query_result, height=100)
-                            
+            """         
+                        with st.spinner("Generating SQL Query..."):
                             try:
-                                result = pd.read_sql(st.session_state.query_result, conn)
-                                st.write("Query Result")
-                                st.write(result)
-                                st.session_state.query_result = result
-                                if 'clarification_query_checkbox' not in st.session_state:
-                                    st.session_state.clarification_query_checkbox = False
-                                st.session_state.clarification_query_checkbox = st.checkbox("Ask a Clarification Query About the Data", value=st.session_state.clarification_query_checkbox)
-                                if st.session_state.clarification_query_checkbox:
-                                    st.text_area("Enter your clarification:")
-
+                                chat_completion = client.chat.completions.create(
+                                    messages=[
+                                        {"role": "user", "content": prompt}
+                                    ],
+                                    model="gpt-4o-mini"
+                                )
+                                sql_query = chat_completion.choices[0].message.content.split('```sql')[-1].split('```')[0].strip()
+                                st.session_state.query_result = sql_query
+                                st.text_area("Generated SQL Query", value=st.session_state.query_result, height=100)
+                                
+                                try:
+                                    result = pd.read_sql(st.session_state.query_result, conn)
+                                    st.write("Query Result")
+                                    st.write(result)
+                                    st.session_state.query_result = result
+                                    if 'clarification_query_checkbox' not in st.session_state:
+                                        st.session_state.clarification_query_checkbox = False
+                                    st.session_state.clarification_query_checkbox = st.checkbox("Ask a Clarification Query About the Data", value=st.session_state.clarification_query_checkbox)
+                                    if st.session_state.clarification_query_checkbox:
+                                        st.text_area("Enter your clarification:")
+    
+                                except Exception as e:
+                                    st.error(f"Error executing query: {e}")
                             except Exception as e:
-                                st.error(f"Error executing query: {e}")
-                        except Exception as e:
-                            st.error(f"Error generating SQL query: {e}")
+                                st.error(f"Error generating SQL query: {e}")
                     else:
                         st.error("Either OpenAI API key or data query is missing.")
 
