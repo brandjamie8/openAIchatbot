@@ -167,7 +167,7 @@ def main():
                 pivot = df[count_column].value_counts().reset_index()
                 pivot.columns = [count_column, 'Count']                
 
-                fig = px.bar(pivot, x=count_column, y='Count', title=f"Pivot Table for {selected_table}")
+                fig = px.bar(pivot, x=count_column, y='Count', title=f"{selected_table} by {count_column}")
                 st.write("Pivot Table Data")
                 st.write(pivot)
                 st.plotly_chart(fig)
