@@ -144,15 +144,17 @@ def main():
             st.write("")
             selected_table = st.selectbox("Select a table to see more detail", list(st.session_state.data_frames.keys()))
             if selected_table:    
-                
-                st.subheader(f"{selected_table} Table Schema and Data")
+                st.header(f"{selected_table} Table)
+                st.subheader("Data and Schema")
+                st.write("Columns generated are:")
                 for column, definition in table_definitions[selected_table].items():
                     st.write(f"**{column}**: {definition}")
-                st.write(f"Data for {selected_table}")
+                st.write("")
+                st.write(f"First 5 Rows of {selected_table} Table:")
                 st.write(df.head(5))
                 query = f"PRAGMA table_info({selected_table})"
                 schema = pd.read_sql(query, conn)
-                st.write(f"Schema for {selected_table}")
+                st.write(f"Schema for {selected_table} Table")
                 st.write(schema)
                 
                 st.subheader("Display the Generated Data")
