@@ -140,8 +140,8 @@ def main():
         if num_rows > 0:
             st.write("Tables generated are:")
             for table in table_definitions:
-                st.write(f"\t{chr(8226)} {table}")
-            
+                st.markdown(f"&emsp; • {table}")
+            st.write("")
             selected_table = st.selectbox("Select a table to see more detail", list(st.session_state.data_frames.keys()))
             if selected_table:    
                 
