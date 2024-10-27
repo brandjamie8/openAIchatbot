@@ -2,7 +2,4 @@ streamlit
 pandas
 numpy
 plotly
-sqlite3
-os
-re
 openai
