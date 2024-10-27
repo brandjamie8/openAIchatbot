@@ -171,7 +171,8 @@ def main():
                 st.write("Pivot Table Data")
                 st.write(pivot)
                 st.plotly_chart(fig)
-
+                
+                st.header("Chatbot: Natural Language to SQL Query")
                 show_suggested_prompts = st.checkbox("Show Suggested Prompts for Querying the Data")
                 if show_suggested_prompts:
                     difficulty = st.selectbox("Select difficulty level", ["Simple", "Tricky", "Challenging", "Impossible"])
@@ -199,8 +200,7 @@ def main():
                     st.subheader(f"{difficulty} Queries")
                     for prompt in suggested_prompts[difficulty]:
                         st.write(f"- {prompt}")
-
-                st.header("Chatbot: Natural Language to SQL Query")
+                        
                 if 'query_result' not in st.session_state:
                     st.session_state.query_result = None
 
