@@ -202,7 +202,7 @@ def main():
                 user_query = st.text_area("Enter your data request:")
 
                 if st.button("Generate SQL Query"):
-                    date_pattern = re.compile(r'\b(\d{4}-\d{2}-\d{2}|\b(January|February|March|April|May|June|July|August|September|October|November|December)\s\d{4}\b)')
+                    date_pattern = re.compile(r'\b(\d{4}-\d{2}-\d{2}|\b(january|february|march|april|may|june|july|august|september|october|november|december)\s\d{4}|\b\d{4}\b)', re.IGNORECASE)
                     if not date_pattern.search(user_query):
                         st.warning("It looks like you haven't specified a date period in your request!")
                     if openai_api_key and user_query:
