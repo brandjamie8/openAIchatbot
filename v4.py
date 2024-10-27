@@ -138,7 +138,11 @@ def main():
             df.to_sql(table_name, conn, index=False, if_exists='replace')
 
         if num_rows > 0:
-            selected_table = st.selectbox("Select a table", list(st.session_state.data_frames.keys()))
+            
+            for table in table_definitions:
+                st.write(f"**{table}**")
+            
+            selected_table = st.selectbox("Select a table to see more detail", list(st.session_state.data_frames.keys()))
             if selected_table:    
                 
                 st.subheader(f"{selected_table} Table Schema and Data")
@@ -150,18 +154,19 @@ def main():
                 schema = pd.read_sql(query, conn)
                 st.write(f"Schema for {selected_table}")
                 st.write(schema)
+                
+                st.subheader("Display the Generated Data")
                 df = st.session_state.data_frames[selected_table]
-                filter_column = st.selectbox("Select a column to filter", [None] + list(df.columns), key="filter_column")
+                count_column = st.selectbox("Select a column to count", df.columns, key="count_column")
+                filter_column = st.selectbox("Add a column to filter if needed", [None] + list(df.columns), key="filter_column")
                 filter_value = None
                 if filter_column is not None:
-                    filter_value = st.text_input(f"Enter value to filter by {filter_column}")
-                
+                    filter_value = st.text_input(f"Enter value to filter by {filter_column}") 
                 if filter_value:
                     df = df[df[filter_column] == filter_value]
-                
-                count_column = st.selectbox("Select a column to count", df.columns, key="count_column")
                 pivot = df[count_column].value_counts().reset_index()
-                pivot.columns = [count_column, 'Count']
+                pivot.columns = [count_column, 'Count']                
+
                 fig = px.bar(pivot, x=count_column, y='Count', title=f"Pivot Table for {selected_table}")
                 st.write("Pivot Table Data")
                 st.write(pivot)
