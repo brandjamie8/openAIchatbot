@@ -78,7 +78,7 @@ def preload_nhs_tables(num_rows):
     }
 
 def main():
-    st.title("Data Chatbot")
+    st.title("Text to Data Bot")
 
     password = st.text_input("Enter Password", type="password")
     
