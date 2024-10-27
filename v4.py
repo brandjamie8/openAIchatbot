@@ -138,9 +138,9 @@ def main():
             df.to_sql(table_name, conn, index=False, if_exists='replace')
 
         if num_rows > 0:
-            
+            st.write("Tables generated are:")
             for table in table_definitions:
-                st.write(f"**{table}**")
+                st.write(f"*{table}")
             
             selected_table = st.selectbox("Select a table to see more detail", list(st.session_state.data_frames.keys()))
             if selected_table:    
