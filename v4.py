@@ -28,8 +28,8 @@ def preload_nhs_tables(num_rows):
     
     patients_data = {
         "PatientID": patient_ids,
-        "Name": generate_varchar(["Alice", "Bob", "Charlie", "David", "Ella"], num_rows),
-        "Gender": generate_varchar(["Male", "Female"], num_rows),
+        "Name": generate_varchar(["Alice", "Bob", "Carlos", "Dinesh", "Eric", "Fatima", "Gregory", "Hiroshi", "Iman", "Juan", "Kwame", "Louis", "Mei"], num_rows),
+        "Gender": generate_varchar(["Male", "Female", "Not Specified"], num_rows),
         "DateOfBirth": generate_date("1940-01-01", "2020-12-31", num_rows),
     }
     patients_df = pd.DataFrame(patients_data)
@@ -37,8 +37,8 @@ def preload_nhs_tables(num_rows):
     appointments_data = {
         "AppointmentID": generate_unique_ids(num_rows),
         "PatientID": random.choices(patient_ids, k=num_rows),
-        "Date": generate_date("2023-01-01", "2023-12-31", num_rows),
-        "Department": generate_varchar(["Cardiology", "Oncology", "Paediatrics", "General Medicine"], num_rows),
+        "Date": generate_date("2022-01-01", "2023-12-31", num_rows),
+        "Department": generate_varchar(["Cardiology", "Dermatology", "Paediatrics", "General Medicine"], num_rows),
     }
     appointments_df = pd.DataFrame(appointments_data)
 
@@ -55,8 +55,8 @@ def preload_nhs_tables(num_rows):
         "PrescriptionID": generate_unique_ids(num_rows),
         "PatientID": random.choices(patient_ids, k=num_rows),
         "Medication": generate_varchar(["Paracetamol", "Ibuprofen", "Aspirin", "Metformin"], num_rows),
-        "Dose": generate_varchar(["500mg", "200mg", "100mg", "1g"], num_rows),
-        "DatePrescribed": generate_date("2023-01-01", "2023-12-31", num_rows),
+        "Dose": generate_varchar(["500mg", "200mg", "100mg"], num_rows),
+        "DatePrescribed": generate_date("2022-01-01", "2023-12-31", num_rows),
     }
     prescriptions_df = pd.DataFrame(prescriptions_data)
 
@@ -64,7 +64,7 @@ def preload_nhs_tables(num_rows):
         "SurgeryID": generate_unique_ids(num_rows),
         "PatientID": random.choices(patient_ids, k=num_rows),
         "SurgeryType": generate_varchar(["Appendectomy", "Hip Replacement", "Cataract Surgery", "Gallbladder Removal"], num_rows),
-        "SurgeryDate": generate_date("2023-01-01", "2023-12-31", num_rows),
+        "SurgeryDate": generate_date("2022-01-01", "2023-12-31", num_rows),
         "Surgeon": generate_varchar(["Dr. Smith", "Dr. Jones", "Dr. Brown", "Dr. Taylor"], num_rows),
     }
     surgeries_df = pd.DataFrame(surgeries_data)
