@@ -249,6 +249,25 @@ def main():
                                     st.write("Query Result")
                                     st.write(result)
                                     st.session_state.query_result = result
+
+                                    summary_prompt = f"""
+                                    The following SQL query has been generated:
+                                    sql
+                                    {sql_query}
+                                    Provide a very brief but specific natural language summary of the data that have been pulled:
+                                    """
+                                    try:
+                                        summary_completion = client.chat.completions.create(
+                                            messages=[
+                                                {"role": "user", "content": summary_prompt}
+                                            ],
+                                            model="gpt-4o-mini"
+                                        )
+                                        summary = summary_completion.choices[0].message.content.strip()
+                                        st.text_area("Query Summary", value=summary, height=100)
+                                    except Exception as e:
+                                        st.error(f"Error generating summary: {e}")
+                               
                                     if 'clarification_query_checkbox' not in st.session_state:
                                         st.session_state.clarification_query_checkbox = False
                                     st.session_state.clarification_query_checkbox = st.checkbox("Ask a Clarification Query About the Data", value=st.session_state.clarification_query_checkbox)
